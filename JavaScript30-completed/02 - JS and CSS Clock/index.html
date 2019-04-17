@@ -11,6 +11,7 @@
 
 	<div class="clock">
 		<div class="clock-face">
+			<div class="hand dot"></div>
 			<div class="hand hour-hand"></div>
 			<div class="hand min-hand"></div>
 			<div class="hand second-hand"></div>
@@ -70,15 +71,33 @@
 			transition: all .05s;
 			transition-timing-function: cubic-bezier(0, 1.97, 0.58, 1);
 		}
+		.hour-hand {
+			width: 35%;
+			right: 152px;
+		}
+		.dot {
+			width: 3%;
+			height: 9px;
+			top: 154px;
+			right: 151px;
+			border-radius: 50%;
+		}
 	</style>
 	<script>
 		let secondHand = document.querySelector('.second-hand'),
 			minuteHand = document.querySelector('.min-hand'),
 			hourHand = document.querySelector('.hour-hand');
+			
+		//Fix the flicker when the clock passes the 12 mark.
+		function resetDeg(elem, deg) {  
+			if (deg === 90) {
+				elem.style.transition = 'all 0.0s'
+			}
+		}
 
 		function setTime() {
 			var now = new Date(),
-				hour = now.getMinutes(),
+				hour = now.getHours(),
 				hrDeg = ((hour / 12) * 360) + 90,
 				minutes = now.getMinutes(),
 				minDeg = ((minutes / 60) * 360) + 90,
@@ -88,6 +107,10 @@
 			secondHand.style.transform = `rotate(${secDeg}deg)`;
 			minuteHand.style.transform = `rotate(${minDeg}deg)`;
 			hourHand.style.transform = `rotate(${hrDeg}deg)`;
+
+			resetDeg(secondHand, secDeg);
+			resetDeg(minuteHand, minDeg);
+			resetDeg(hourHand, hrDeg);
 		}
 		setInterval(setTime, 1000);
 	</script>
