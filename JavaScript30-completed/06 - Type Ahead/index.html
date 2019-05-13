@@ -24,7 +24,7 @@ fetch(endpoint)
 function findMatches(wordToMatch, cities) {
   return cities.filter(place => {
     // find the city or state to match the search.
-    const regex = new RegExp(wordToMatch, 'gi');
+    let regex = new RegExp(wordToMatch, 'gi');
   /* 
 	RegExp:
 	g: global.
@@ -37,11 +37,11 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 function displayMatches() {
-  const matchArray = findMatches(this.value, cities);
-  const html = matchArray.map(place => {
-	  const regex = new RegExp(this.value, 'gi');
-	  const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
-	  const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);	  
+  let matchArray = findMatches(this.value, cities);
+  let html = matchArray.map(place => {
+	  let regex = new RegExp(this.value, 'gi');
+	  let cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+	  let stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);	  
     return `
 		<li>
 			<span class="name">${cityName}, ${stateName}</span>
@@ -52,8 +52,8 @@ function displayMatches() {
   suggestions.innerHTML = html;
 }
 
-const searchInput = document.querySelector('.search');
-const suggestions = document.querySelector('.suggestions');
+let searchInput = document.querySelector('.search');
+let suggestions = document.querySelector('.suggestions');
 
 searchInput.addEventListener('change', displayMatches);
 searchInput.addEventListener('keyup', displayMatches);
