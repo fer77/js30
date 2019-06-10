@@ -28,7 +28,7 @@
   <script>
     const addItems = document.querySelector('.add-items');
     const itemsList = document.querySelector('.plates');
-    const items = JSON.parse(localStorage.getItem('items')) || [];
+    const items = JSON.parse(localStorage.getItem('items')) || []; // gets local storage and turns it back to an object.
   
     function addItem(e) {
       e.preventDefault();
@@ -40,7 +40,7 @@
   
       items.push(item);
       populateList(items, itemsList);
-      localStorage.setItem('items', JSON.stringify(items));
+      localStorage.setItem('items', JSON.stringify(items)); // items returns [object, Object], because the browser's local storage doesn't know how to deal with anything other than strings.
       this.reset();
     }
   
